@@ -24,6 +24,7 @@ ns.defaults = {
   stealthMode = true,
   plate       = true,
   pack        = true,
+  announce    = false,
   debug       = false,
 }
 

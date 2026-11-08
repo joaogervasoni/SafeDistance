@@ -3,7 +3,7 @@
 ## Notes: Shows how close you can get to your target before it aggroes or detects you in stealth. Learns from every pull.
 ## Notes-ptBR: Mostra até onde você pode chegar do alvo sem puxar aggro ou ser detectado furtivo. Aprende com cada puxada.
 ## Author: Zaetic
-## Version: 1.0.0
+## Version: 1.1.0
 ## IconTexture: Interface\AddOns\SafeDistance\Media\Icon
 ## SavedVariables: SafeDistanceDB
 ## X-License: MIT

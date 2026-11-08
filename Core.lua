@@ -189,7 +189,10 @@ local function LearnDistance(pull, log)
   local kind = pull.stealthed and "stealth" or "aggro"
   local count, zoneName = ns.RecordPull(pull.npc, pull.name, distance, pull.levelDiff, kind)
   Write(log, "result", ("learned %s %.1f yd"):format(kind, distance))
-  Say((pull.stealthed and L.learnedStealth or L.learned):format(pull.name or "?", distance, count, zoneName or "?"))
+  if ns.settings.announce then
+    Say((pull.stealthed and L.learnedStealth or L.learned):format(pull.name or "?", ns.Yards(distance), count,
+      zoneName or "?"))
+  end
 end
 
 local function LearnPack(pull, log)
@@ -208,7 +211,7 @@ local function LearnPack(pull, log)
   if attackers == 0 then return Write(log, "pack", "no attackers found") end
   Write(log, "pack", attackers .. " attacker(s)")
 
-  if ns.RecordPack(pull.npc, pull.name, attackers >= 2) then
+  if ns.RecordPack(pull.npc, pull.name, attackers >= 2) and ns.settings.announce then
     Say(L.packLearned:format(pull.name or "?"))
   end
 end
@@ -348,7 +351,7 @@ eventFrame:SetScript("OnEvent", function(_, event, ...) events[event](...) end)
 
 local TOGGLES = {
   sound = "sound", learn = "learn", zones = "perZone",
-  stealth = "stealthMode", plate = "plate", pack = "pack",
+  stealth = "stealthMode", plate = "plate", pack = "pack", chat = "announce",
 }
 
 local commands = {}

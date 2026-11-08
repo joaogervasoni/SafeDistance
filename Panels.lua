@@ -71,7 +71,7 @@ end
 local function DistanceText(values)
   local middle = values and ns.Median(values)
   if not middle then return "-" end
-  return L.win_value:format(middle, #values)
+  return L.win_value:format(ns.Yards(middle), #values)
 end
 
 local function MobText(mob)
@@ -176,6 +176,7 @@ Checkbox("stealthMode", 20, -168)
 Checkbox("learn",       20, -210)
 Checkbox("perZone",     20, -236)
 Checkbox("pack",        20, -262)
+Checkbox("announce",    20, -288)
 
 -- hand-built: slider templates differ between game versions
 local function Slider(setting, x, y, minValue, maxValue, step, format)

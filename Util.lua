@@ -43,6 +43,13 @@ function ns.Ask(label, fn, ...)
   return value
 end
 
+-- yards to the nearest half like "17" or "17.5"
+function ns.Yards(value)
+  local half = math.floor(value * 2 + 0.5) / 2
+  if half % 1 == 0 then return ("%d"):format(half) end
+  return (("%.1f"):format(half):gsub("%.", ns.L.decimal))
+end
+
 function ns.SetDebug(on)
   ns.debug = on
   if on then

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+- Distances now show half yards, so 17.5 yd no longer shows up as 17.
+- The chat message after each pull is now off by default. 
+    - _Turn it back on with `/sd chat` or the checkbox in the options_
+
 ## 1.0.0 - first release 🎉
 
 - A small box above your action bars shows the distance to your target, its aggro radius and a ruler: green is safe, yellow is the edge, red is too close.

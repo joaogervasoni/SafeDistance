@@ -45,7 +45,7 @@ Settings are in `Options -> AddOns -> Safe Distance`. Type `/sd` to see every co
 
 ## Good to know
 
-- The game never tells addons the exact distance to a mob, only whether it's within a few fixed ranges. That's why you see something like 20–25 yd instead of one number.
+- The game never tells addons the exact distance to a mob, only whether it's within a few fixed ranges. That's why you see something like 20-25 yd instead of one number.
 - It only measures out of combat. Blizzard blocks this kind of check during fights.
 - The first numbers are a guess (15 yards plus the level difference). They get better every time a mob pulls you.
 - Mobs facing you spot stealth from farther away, and addons can't see which way a mob is facing.
