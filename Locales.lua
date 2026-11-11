@@ -55,7 +55,7 @@ ns.LOCALES.en = {
   debugToggle = "debug mode %s",
   debugNothing = "the game hasn't refused any question so far",
   debugReport = "questions the game refused:",
-  debugSaving = "refused questions and your last 20 pulls are now saved. Play, then /reload to write them to disk.",
+  debugSaving = "refused questions and your last 300 pulls are now saved. Play, then /reload to write them to disk.",
   debugCleared = "saved debug report deleted",
   help = {
     "commands (or use the panel: /sd options):",
@@ -154,7 +154,7 @@ ns.LOCALES.pt = {
   debugToggle = "modo debug %s",
   debugNothing = "o jogo não recusou nenhuma pergunta até agora",
   debugReport = "perguntas que o jogo recusou:",
-  debugSaving = "perguntas recusadas e suas últimas 20 puxadas agora são salvas. "
+  debugSaving = "perguntas recusadas e suas últimas 300 puxadas agora são salvas. "
     .. "Jogue e dê /reload pra gravar no disco.",
   debugCleared = "relatório de debug salvo foi apagado",
   help = {

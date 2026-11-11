@@ -3,7 +3,7 @@ local _, ns = ...
 -- Forever (like Midnight) returns "secret values" from some calls in combat, and
 -- using one errors. ns.Ask returns nil instead and counts the refusal for /sd debug.
 
-local MAX_LOGGED_PULLS = 20
+local MAX_LOGGED_PULLS = 300
 
 local issecret = issecretvalue or function() return false end
 ns.issecret = issecret
