@@ -469,11 +469,13 @@ local function ShowHelp()
   print(L.help[3]:format(ns.settings.margin))
   for i = 4, #L.help do print(L.help[i]) end
 end
+commands.help = ShowHelp
 
 SLASH_SAFEDISTANCE1 = "/sd"
 SLASH_SAFEDISTANCE2 = "/safedistance"
 SlashCmdList.SAFEDISTANCE = function(message)
   local name, argument = (message or ""):lower():match("^(%S*)%s*(.-)$")
+  if name == "" then return commands.options() end
 
   local setting = TOGGLES[name]
   if setting then

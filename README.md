@@ -37,7 +37,7 @@ If you used the green **Code -> Download ZIP** button instead, the folder will b
 
 Target a mob and walk toward it. When the box turns yellow, stealth.
 
-Settings are in `Options -> AddOns -> Safe Distance`. Type `/sd` to see every command. The ones you'll actually use:
+Settings are in `Options -> AddOns -> Safe Distance`, or just type `/sd`. `/sd help` lists every command. The ones you'll actually use:
 
 - `/sd window`: see what it learned and delete anything that looks wrong
 - `/sd offset -2`: if mobs keep letting you get closer than it says
