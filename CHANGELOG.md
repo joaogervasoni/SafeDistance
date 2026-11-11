@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fixed the box staying on screen after leaving a dungeon.
+
 ## 1.1.0
 
 - Distances now show half yards, so 17.5 yd no longer shows up as 17.

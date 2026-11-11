@@ -70,7 +70,7 @@ local lastState, lastMode
 
 -- returns the delay until the next update
 local function Update()
-  if UnitIsDeadOrGhost("target") then
+  if not UnitExists("target") or UnitIsDeadOrGhost("target") then
     ns.HideDisplay()
     ticker:Hide()
     return TICK_FAR
@@ -332,7 +332,12 @@ local function ZoneChanged()
   ns.InvalidateZone()
   ForgetEstimates()
 end
-events.PLAYER_ENTERING_WORLD = ZoneChanged
+function events.PLAYER_ENTERING_WORLD()
+  ZoneChanged()
+  ReadTarget()
+  ns.ForgetPlate()
+  Refresh()
+end
 events.ZONE_CHANGED_NEW_AREA = ZoneChanged
 events.ZONE_CHANGED = ZoneChanged
 events.ZONE_CHANGED_INDOORS = ZoneChanged
