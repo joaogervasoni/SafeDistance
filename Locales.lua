@@ -4,7 +4,8 @@ ns.LOCALES = {}
 
 ns.LOCALES.en = {
   safe = "Safe",
-  edge = "At the edge, go stealth",
+  edge = "At the edge, stop here",
+  edge_stealth = "At the edge, go stealth",
   danger = "Inside aggro range",
   stealth_safe = "Stealthed and safe",
   stealth_edge = "Careful, almost detected",
@@ -103,7 +104,8 @@ ns.LOCALES.en = {
 
 ns.LOCALES.pt = {
   safe = "Seguro",
-  edge = "No limite, fique invisível",
+  edge = "No limite, pare aqui",
+  edge_stealth = "No limite, fique invisível",
   danger = "Dentro do aggro",
   stealth_safe = "Furtivo e seguro",
   stealth_edge = "Cuidado, quase detectado",

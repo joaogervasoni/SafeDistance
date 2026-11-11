@@ -103,6 +103,17 @@ radiusText:SetTextColor(0.8, 0.8, 0.8)
 
 local shown = {} -- last painted values, to skip redundant redraws
 
+---@type boolean?
+local canStealth
+local function CanStealth()
+  if canStealth == nil then
+    local _, class = UnitClass("player")
+    local _, race = UnitRace("player")
+    canStealth = class == "ROGUE" or class == "DRUID" or race == "NightElf"
+  end
+  return canStealth
+end
+
 function ns.RepaintDisplay()
   wipe(shown)
 end
@@ -156,6 +167,7 @@ function ns.ShowRuler(view)
     label = L["stealth_" .. state]
   else
     label = L[state]
+    if state == "edge" and not view.stealthed and CanStealth() then label = L.edge_stealth end
     if view.stealthed and state ~= "safe" then label = label .. L.stealthedSuffix end
   end
   SetState(state, label)

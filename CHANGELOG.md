@@ -4,6 +4,7 @@
 
 - Fixed the box staying on screen after leaving a dungeon.
 - `/sd` now opens the options and `/sd help` the list of commands.
+- The yellow warning only tells you to go stealth if your character can.
 
 ## 1.1.0
 

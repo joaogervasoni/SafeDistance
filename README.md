@@ -5,7 +5,9 @@
 
 I play a rogue, and I kept getting pulled one step before I could stealth. Sooo I made this.
 
-Safe Distance tells you how close you are to your target's aggro range, so you know when to stop and stealth. Once you're stealthed, it switches to the mob's detection range instead. 
+Safe Distance tells you how close you are to your target's aggro range, so you know when to stop and stealth. Once you're stealthed, it switches to the mob's detection range instead.
+
+You don't need to be a rogue though. It works the same for any class, if you just want to get past mobs without pulling them (like when you're picking herbs).
 
 **It learns: every time a mob pulls you, it remembers the distance for next time.**
 
@@ -35,7 +37,7 @@ If you used the green **Code -> Download ZIP** button instead, the folder will b
 
 ## How to use it
 
-Target a mob and walk toward it. When the box turns yellow, stealth.
+Target a mob and walk toward it. When the box turns yellow, stop (or stealth, if you can).
 
 Settings are in `Options -> AddOns -> Safe Distance`, or just type `/sd`. `/sd help` lists every command. The ones you'll actually use:
 
