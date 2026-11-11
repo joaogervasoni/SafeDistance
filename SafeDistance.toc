@@ -7,6 +7,8 @@
 ## IconTexture: Interface\AddOns\SafeDistance\Media\Icon
 ## SavedVariables: SafeDistanceDB
 ## X-License: MIT
+## X-Website: https://www.curseforge.com/wow/addons/safe-distance
+## X-Curse-Project-ID: 1789708
 
 Locales.lua
 Util.lua
