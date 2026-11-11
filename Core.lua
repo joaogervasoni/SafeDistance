@@ -393,20 +393,28 @@ function commands.options()
 end
 commands.config = commands.options
 
-function commands.debug()
-  local report = ns.RefusalReport()
-  if #report == 0 then
-    Say(L.debugNothing)
+function commands.debug(_, word)
+  if word == "on" or word == "off" then
+    local on = (word == "on")
+    ns.Set("debug", on)
+    ns.SetDebug(on)
+    Say(L.debugToggle:format(on and L.on or L.off))
+    Say(on and L.debugSaving or L.debugKept)
+  elseif word == "clear" then
+    ns.ClearDebug()
+    Say(L.debugCleared)
+  elseif word == "" then
+    local report = ns.RefusalReport()
+    if #report == 0 then
+      Say(L.debugNothing)
+    else
+      Say(L.debugReport)
+      for _, line in ipairs(report) do print("  " .. line) end
+    end
+    Say(L.debugStatus:format(ns.settings.debug and L.on or L.off, ns.SavedPullCount()))
   else
-    Say(L.debugReport)
-    for _, line in ipairs(report) do print("  " .. line) end
+    return false
   end
-
-  local on = not ns.settings.debug
-  ns.Set("debug", on)
-  ns.SetDebug(on)
-  Say(L.debugToggle:format(on and L.on or L.off))
-  Say(on and L.debugSaving or L.debugCleared)
 end
 
 function commands.window() ns.ToggleWindow() end

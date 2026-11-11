@@ -8,6 +8,7 @@ local MAX_LOGGED_PULLS = 300
 local issecret = issecretvalue or function() return false end
 ns.issecret = issecret
 
+---@type boolean
 ns.debug = false
 ---@type table<string, { secret: integer, error: integer, lastError: string? }>
 local refusals = {} -- [label] = { secret, error, lastError }
@@ -57,9 +58,14 @@ function ns.SetDebug(on)
     if next(store.refusals) == nil then store.refusals = refusals end
     refusals = store.refusals
   else
-    ns.ClearDebugStore()
-    refusals = {}
+    refusals = {} -- stop saving, but keep what was already saved
   end
+end
+
+function ns.ClearDebug()
+  ns.ClearDebugStore()
+  refusals = {}
+  if ns.debug then ns.SetDebug(true) end
 end
 
 -- returns the entry so the caller can fill in the outcome later; nil if debug is off

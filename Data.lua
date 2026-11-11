@@ -98,6 +98,10 @@ function ns.ClearDebugStore()
   db.debug = nil
 end
 
+function ns.SavedPullCount()
+  return db.debug and #db.debug.pulls or 0
+end
+
 -- zones: one profile per instance, or per zone in the open world (subzones/caves roll up)
 
 local zoneKey, zoneName, zoneIsInstance

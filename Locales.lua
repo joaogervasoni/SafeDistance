@@ -58,6 +58,8 @@ ns.LOCALES.en = {
   debugReport = "questions the game refused:",
   debugSaving = "refused questions and your last 300 pulls are now saved. Play, then /reload to write them to disk.",
   debugCleared = "saved debug report deleted",
+  debugKept = "the pulls already saved were kept. /sd debug clear deletes them.",
+  debugStatus = "debug mode is %s, %d pulls saved (/sd debug on, off or clear)",
   help = {
     "commands (type just /sd to open the options):",
     "  /sd offset <n>  - add/subtract yards from the aggro radius (now: %s)",
@@ -70,7 +72,7 @@ ns.LOCALES.en = {
     "  /sd forget  - forget what was learned about your target",
     "  /sd forgetzone  - forget what was learned in this zone/dungeon (/sd forgetall clears everything)",
     "  /sd info  - show which range checks work on your target",
-    "  /sd debug  - turn debug mode on/off (saves a report of refused calls and recent pulls)",
+    "  /sd debug  - show the debug report (/sd debug on|off turns saving on or off, /sd debug clear deletes it)",
     "  /sd lang en|pt  - language",
     "  /sd reset  - restore default settings",
   },
@@ -159,6 +161,8 @@ ns.LOCALES.pt = {
   debugSaving = "perguntas recusadas e suas últimas 300 puxadas agora são salvas. "
     .. "Jogue e dê /reload pra gravar no disco.",
   debugCleared = "relatório de debug salvo foi apagado",
+  debugKept = "as puxadas já salvas foram mantidas. /sd debug clear apaga elas.",
+  debugStatus = "modo debug %s, %d puxadas salvas (/sd debug on, off ou clear)",
   help = {
     "comandos (digite só /sd pra abrir as opções):",
     "  /sd offset <n>  - soma/subtrai jardas do raio de aggro (atual: %s)",
@@ -171,7 +175,7 @@ ns.LOCALES.pt = {
     "  /sd forget  - apaga o que aprendeu do alvo atual",
     "  /sd forgetzone  - apaga o que aprendeu nesta zona/masmorra (/sd forgetall apaga tudo)",
     "  /sd info  - mostra quais medições funcionam no alvo",
-    "  /sd debug  - liga/desliga o modo debug (salva um relatório de chamadas recusadas e puxadas recentes)",
+    "  /sd debug  - mostra o relatório de debug (/sd debug on|off liga ou desliga o registro, /sd debug clear apaga)",
     "  /sd lang pt|en  - idioma",
     "  /sd reset  - volta as configurações ao padrão",
   },

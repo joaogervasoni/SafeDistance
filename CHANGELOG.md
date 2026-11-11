@@ -5,6 +5,10 @@
 - Fixed the box staying on screen after leaving a dungeon.
 - `/sd` now opens the options and `/sd help` the list of commands.
 - The yellow warning only tells you to go stealth if your character can.
+- Adjusts to debug cmd
+    - `/sd debug` now just shows the report.
+    - `/sd debug on` or `off` to start or stop saving
+    - `/sd debug clear` to delete logs and turning it off no longer deletes your saved pulls.
 
 ## 1.1.0
 
