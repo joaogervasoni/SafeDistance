@@ -4,10 +4,10 @@ ns.LOCALES = {}
 
 ns.LOCALES.en = {
   safe = "Safe",
-  edge = "At the edge — go stealth",
+  edge = "At the edge, go stealth",
   danger = "Inside aggro range",
-  stealth_safe = "Stealthed — safe",
-  stealth_edge = "Detection edge — careful",
+  stealth_safe = "Stealthed and safe",
+  stealth_edge = "Careful, almost detected",
   stealth_danger = "Can detect you",
   neutral = "Neutral",
   neutralInfo = "Only attacks if you attack",
@@ -103,10 +103,10 @@ ns.LOCALES.en = {
 
 ns.LOCALES.pt = {
   safe = "Seguro",
-  edge = "No limite — fique invisível",
+  edge = "No limite, fique invisível",
   danger = "Dentro do aggro",
-  stealth_safe = "Furtivo — seguro",
-  stealth_edge = "Limite da detecção — cuidado",
+  stealth_safe = "Furtivo e seguro",
+  stealth_edge = "Cuidado, quase detectado",
   stealth_danger = "Pode te detectar",
   neutral = "Neutro",
   neutralInfo = "Só ataca se você atacar",

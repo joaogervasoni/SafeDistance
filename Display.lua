@@ -115,7 +115,7 @@ local function SetState(state, label)
 end
 
 local function FormatBand(minR, maxR)
-  if maxR then return string.format("%d–%d %s", minR, maxR, L.yd) end
+  if maxR then return string.format("%d-%d %s", minR, maxR, L.yd) end
   if minR > 0 then return string.format("+%d %s", minR, L.yd) end
   return "?"
 end
