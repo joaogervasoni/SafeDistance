@@ -100,12 +100,12 @@ local function Update()
   local minR, maxR = ns.GetRange("target")
 
   local state
-  if minR >= radius + settings.margin then
+  if minR > radius + settings.margin then
     state = "safe"    -- certainly outside
   elseif maxR and maxR <= radius then
     state = "danger"  -- certainly inside
   else
-    state = "edge"    -- the measured band crosses the radius
+    state = "edge"    -- the measured band reaches the radius
   end
 
   view.state, view.mode, view.stealthed = state, mode, stealthed
