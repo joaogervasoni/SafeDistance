@@ -172,8 +172,11 @@ local function TargetPulledUs(pull)
   if ns.Ask("UnitAffectingCombat", UnitAffectingCombat, "target") == false then
     return false, "target isn't in combat"
   end
-  if ns.Ask("UnitIsUnit", UnitIsUnit, "targettarget", "player") == false then
-    return false, "target is attacking someone else"
+  -- targettarget is always secret in combat, threat isn't (2-3 = hitting you)
+  local threat, refused = ns.Ask("UnitThreatSituation", UnitThreatSituation, "player", "target")
+  if not refused then
+    if threat == nil then return false, "target isn't fighting you" end
+    if threat < 2 then return false, "target is attacking someone else" end
   end
   local guid = ns.Ask("UnitGUID", UnitGUID, "target")
   if guid and guid ~= pull.guid then return false, "you switched target" end
@@ -196,14 +199,19 @@ local function LearnDistance(pull, log)
 end
 
 local function LearnPack(pull, log)
+  -- only a pack if the target is fighting you too (a dead one left the threat list)
+  if UnitExists("target") and not UnitIsDead("target") then
+    local onTarget, refused = ns.Ask("UnitThreatSituation", UnitThreatSituation, "player", "target")
+    if not refused and onTarget == nil then return Write(log, "pack", "target isn't fighting you") end
+  end
+
   local attackers, couldSee = 0, false
   for i = 1, 40 do
     local unit = "nameplate" .. i
     if UnitExists(unit) and ns.Ask("UnitCanAttack", UnitCanAttack, "player", unit) then
-      local onUs = ns.Ask("UnitIsUnit", UnitIsUnit, unit .. "target", "player")
-      local threat = ns.Ask("UnitThreatSituation", UnitThreatSituation, "player", unit)
-      if onUs ~= nil or threat ~= nil then couldSee = true end
-      if onUs or threat then attackers = attackers + 1 end
+      local threat, refused = ns.Ask("UnitThreatSituation", UnitThreatSituation, "player", unit)
+      if not refused then couldSee = true end
+      if threat then attackers = attackers + 1 end
     end
   end
 

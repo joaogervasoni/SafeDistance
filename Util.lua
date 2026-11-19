@@ -1,7 +1,7 @@
 local _, ns = ...
 
 -- Forever (like Midnight) returns "secret values" from some calls in combat, and
--- using one errors. ns.Ask returns nil instead and counts the refusal for /sd debug.
+-- using one errors. ns.Ask returns nil, true instead and counts the refusal for /sd debug.
 
 local MAX_LOGGED_PULLS = 300
 
@@ -30,16 +30,17 @@ local function Note(label, kind, message)
   end
 end
 
+-- second return: refused, not a real nil
 function ns.Ask(label, fn, ...)
-  if not fn then return nil end
+  if not fn then return nil, true end
   local ok, value = pcall(fn, ...)
   if not ok then
     Note(label, "error", value)
-    return nil
+    return nil, true
   end
   if issecret(value) then
     Note(label, "secret")
-    return nil
+    return nil, true
   end
   return value
 end
