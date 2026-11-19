@@ -47,13 +47,12 @@ box:SetScript("OnDragStop", function(self)
   ns.Set("point", { point, relativePoint, x, y })
 end)
 
-local packText = box:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-packText:SetPoint("TOPRIGHT", -12, -10)
-packText:SetTextColor(1, 0.6, 0.2)
+local bandText = box:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+bandText:SetPoint("TOPRIGHT", -12, -10)
 
 local stateText = box:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 stateText:SetPoint("TOPLEFT", 12, -9)
-stateText:SetPoint("RIGHT", packText, "LEFT", -4, 0)
+stateText:SetPoint("RIGHT", bandText, "LEFT", -4, 0)
 stateText:SetJustifyH("LEFT")
 stateText:SetWordWrap(false)
 
@@ -94,11 +93,17 @@ rulerBorder:SetPoint("BOTTOMRIGHT", 1, -1)
 rulerBorder:SetBackdrop({ edgeFile = "Interface\\Buttons\\WHITE8X8", edgeSize = 1 })
 rulerBorder:SetBackdropBorderColor(0, 0, 0, 1)
 
-local distanceText = box:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-distanceText:SetJustifyH("LEFT")
+local infoText = box:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+infoText:SetPoint("TOPLEFT", stateText, "BOTTOMLEFT", 0, -5)
+infoText:SetJustifyH("LEFT")
+
+local packText = box:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+packText:SetPoint("TOPRIGHT", ruler, "BOTTOMRIGHT", 0, -4)
+packText:SetTextColor(1, 0.6, 0.2)
 
 local radiusText = box:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-radiusText:SetPoint("TOPRIGHT", ruler, "BOTTOMRIGHT", 0, -4)
+radiusText:SetPoint("TOPLEFT", ruler, "BOTTOMLEFT", 0, -4)
+radiusText:SetJustifyH("LEFT")
 radiusText:SetTextColor(0.8, 0.8, 0.8)
 
 local shown = {} -- last painted values, to skip redundant redraws
@@ -137,12 +142,11 @@ function ns.ShowMessage(state, label, info)
   shown.kind, shown.state, shown.label = "message", state, label
 
   SetState(state, label)
+  bandText:SetText("")
   packText:SetText("")
   ruler:Hide()
   radiusText:SetText("")
-  distanceText:ClearAllPoints()
-  distanceText:SetPoint("TOPLEFT", stateText, "BOTTOMLEFT", 0, -5)
-  distanceText:SetText(info or "")
+  infoText:SetText(info or "")
   box:SetHeight(info and 44 or 30)
   box:Show()
 end
@@ -193,13 +197,12 @@ function ns.ShowRuler(view)
   spark:SetPoint("CENTER", ruler, "LEFT", toPixels(you), 0)
 
   ruler:Show()
-  distanceText:ClearAllPoints()
-  distanceText:SetPoint("TOPLEFT", ruler, "BOTTOMLEFT", 0, -4)
-  distanceText:SetText(FormatBand(view.minR, view.maxR))
+  infoText:SetText("")
+  bandText:SetText(FormatBand(view.minR, view.maxR))
 
   local sourceText = L[SOURCE_TEXT[view.source]]
   if view.source == "npcZone" or view.source == "npc" then sourceText = sourceText:format(view.count) end
-  radiusText:SetText((stealthMode and L.detection or L.aggro):format(radius, L.yd)
+  radiusText:SetText((stealthMode and L.detection or L.aggro):format(ns.Yards(radius), L.yd)
     .. "  |cff8a8a8a" .. sourceText .. "|r")
 
   box:SetHeight(56)
