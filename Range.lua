@@ -57,13 +57,15 @@ local function SpellRanges()
   local found = {}
   local function consider(name, spellID)
     if not name or found[name] then return end
-    local maxRange
+    local minRange, maxRange
     if C_Spell and C_Spell.GetSpellInfo then
       local info = C_Spell.GetSpellInfo(spellID or name)
-      maxRange = info and info.maxRange
+      minRange, maxRange = info and info.minRange, info and info.maxRange
     elseif GetSpellInfo then
-      maxRange = select(6, GetSpellInfo(spellID or name))
+      minRange, maxRange = select(5, GetSpellInfo(spellID or name))
     end
+    -- a dead zone (Throw, Charge: 8 yd) says "out of range" up close and breaks the search
+    if (minRange or 0) > 0 then return end
     if maxRange and maxRange > 0 and maxRange <= 60 then found[name] = maxRange end
   end
 
