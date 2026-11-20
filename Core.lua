@@ -320,8 +320,22 @@ function events.PLAYER_REGEN_DISABLED()
   Refresh()
 end
 
+-- a target picked mid-fight has a secret guid, so read it again once combat ends
+local function ReadTargetIfHidden()
+  if target.valid and not target.guid then
+    ReadTarget()
+    return true
+  end
+end
+
 function events.PLAYER_REGEN_ENABLED()
+  ReadTargetIfHidden()
   Refresh()
+end
+
+-- the restriction can lift after PLAYER_REGEN_ENABLED, so try again here
+function events.ADDON_RESTRICTION_STATE_CHANGED(_, state)
+  if state == Enum.AddOnRestrictionState.Inactive and ReadTargetIfHidden() then Refresh() end
 end
 
 function events.PLAYER_ENTER_COMBAT() -- auto attack
