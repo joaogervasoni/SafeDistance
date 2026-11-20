@@ -1,16 +1,17 @@
 local _, ns = ...
 
 --[[ SafeDistanceDB
-  version  = 2
+  version  = 3
   settings = { only non-default values }
   debug    = { refusals = {}, pulls = {} }   only while /sd debug is on
   zones    = {
     ["z1438"] = { name = "Teldrassil", instance = true|nil, mobs = {
-      [npcID] = { name, aggro = {...}, stealth = {...}, seen = n, packs = n },
+      [npcID] = { name, aggro = { sample, ... }, stealth = { sample, ... }, seen = n, packs = n },
     } },
   }
-  Distances are stored at the player's level (level diff removed), rounded to 0.5,
-  last 5 per mob. "z" = map id, "i" = instance id.
+  sample = { d = distance as measured, m = mob level, p = player level }, last 5 per mob.
+  Samples from version 2 have no levels: their d is already at the player's level.
+  "z" = map id, "i" = instance id.
 ]]
 
 ns.defaults = {
@@ -35,7 +36,7 @@ ns.KINDS = {
   stealth = { base = 7.5, min = 1.5, max = 30, skull = 30 },
 }
 
-local DB_VERSION          = 2
+local DB_VERSION          = 3
 local SAMPLES_PER_MOB     = 5
 local MIN_FOR_CALIBRATION = 3
 
@@ -57,15 +58,37 @@ local function roundToHalf(value)
   return math.floor(value * 2 + 0.5) / 2
 end
 
+local function AtPlayerLevel(sample)
+  if not sample.m then return sample.d end
+  return sample.d - (sample.m - sample.p)
+end
+
 local function append(into, list)
   if list then
-    for i = 1, #list do into[#into + 1] = list[i] end
+    for i = 1, #list do into[#into + 1] = AtPlayerLevel(list[i]) end
   end
 end
 
 -- settings
 
+-- version 2 kept plain numbers, already at the player's level
+local function Migrate(saved)
+  if saved.version ~= 2 then return end
+  for _, zone in pairs(saved.zones or {}) do
+    for _, mob in pairs(zone.mobs or {}) do
+      for _, kind in ipairs({ "aggro", "stealth" }) do
+        local list = mob[kind]
+        if list then
+          for i = 1, #list do list[i] = { d = list[i] } end
+        end
+      end
+    end
+  end
+  saved.version = 3
+end
+
 function ns.LoadDatabase()
+  if type(SafeDistanceDB) == "table" then Migrate(SafeDistanceDB) end
   if type(SafeDistanceDB) ~= "table" or SafeDistanceDB.version ~= DB_VERSION then
     ---@diagnostic disable-next-line: global-in-non-module -- SavedVariables are globals
     SafeDistanceDB = { version = DB_VERSION, settings = {}, zones = {} }
@@ -199,8 +222,10 @@ local function LearnedBase(npc, kind)
 
   if npc then
     local here = settings.perZone and db.zones[key]
-    local list = here and here.mobs[npc] and here.mobs[npc][kind]
-    if list and #list > 0 then return median(list), "npcZone", #list end
+    local mobHere = here and here.mobs[npc]
+    wipe(merged)
+    append(merged, mobHere and mobHere[kind])
+    if #merged > 0 then return median(merged), "npcZone", #merged end
 
     wipe(merged)
     for _, zone in pairs(db.zones) do
@@ -257,13 +282,13 @@ end
 
 -- recording
 
-function ns.RecordPull(npc, name, distance, levelDiff, kind)
+function ns.RecordPull(npc, name, distance, mobLevel, playerLevel, kind)
   local zone, zoneLabel = CurrentZoneRecord(true)
   local mob = MobRecord(zone, npc, name)
   local list = mob[kind] or {}
   mob[kind] = list
 
-  list[#list + 1] = roundToHalf(distance - levelDiff)
+  list[#list + 1] = { d = roundToHalf(distance), m = mobLevel, p = playerLevel }
   if #list > SAMPLES_PER_MOB then table.remove(list, 1) end
 
   DataChanged()
@@ -335,4 +360,8 @@ function ns.Summary()
   return typesCount, zones, distances, hereTypes, hereDistances
 end
 
-ns.Median = median
+function ns.SampleMedian(list)
+  wipe(merged)
+  append(merged, list)
+  return median(merged)
+end

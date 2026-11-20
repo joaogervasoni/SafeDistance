@@ -190,7 +190,7 @@ local function LearnDistance(pull, log)
   -- middle of the last measured band
   local distance = (pull.minR > 0) and (pull.minR + pull.maxR) / 2 or pull.maxR
   local kind = pull.stealthed and "stealth" or "aggro"
-  local count, zoneName = ns.RecordPull(pull.npc, pull.name, distance, pull.levelDiff, kind)
+  local count, zoneName = ns.RecordPull(pull.npc, pull.name, distance, pull.mobLevel, pull.playerLevel, kind)
   Write(log, "result", ("learned %s %.1f yd"):format(kind, distance))
   if ns.settings.announce then
     Say((pull.stealthed and L.learnedStealth or L.learned):format(pull.name or "?", ns.Yards(distance), count,
@@ -247,7 +247,7 @@ local function OnCombatStart()
 
   local pull = {
     guid = target.guid, npc = target.npc, name = target.name,
-    levelDiff = (target.level or 0) - UnitLevel("player"),
+    mobLevel = target.level, playerLevel = UnitLevel("player"),
     minR = snapshot.minR, maxR = snapshot.maxR, stealthed = snapshot.stealthed,
   }
 

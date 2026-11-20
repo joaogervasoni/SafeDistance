@@ -69,7 +69,7 @@ local function GetRow(index)
 end
 
 local function DistanceText(values)
-  local middle = values and ns.Median(values)
+  local middle = values and ns.SampleMedian(values)
   if not middle then return "-" end
   return L.win_value:format(ns.Yards(middle), #values)
 end
