@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.3.0
+
+- Fixed the box jumping from green to red without the yellow warning.
+- The aggro in the box now shows half yards too, so 12.5 no longer shows up as 12.
+- The distance moved to the top right of the box, so it doesn't overlap the aggro anymore.
+- Better at telling who pulled you, so it learns fewer wrong distances.
+    - The pack warning only counts mobs that came with your target.
+    - "Fighting someone else" shows up more often.
+    - A target picked mid-fight is recognized once the fight ends.
+    - Spells like Throw or Charge no longer mess up the distance up close.
+- Learned distances now save your level and the mob's.
+    - _Your data is converted on login. Going back to 1.2.0 or older will erase it._
+
 ## 1.2.0
 
 - Fixed the box staying on screen after leaving a dungeon.
