@@ -88,12 +88,17 @@ local function Update()
     snapshot.time = 0
     return TICK_FAR
   end
+  ---@type boolean
   local mobFighting = ns.Ask("UnitAffectingCombat", UnitAffectingCombat, "target") and true or false
-  if mobFighting and ns.Ask("UnitIsUnit", UnitIsUnit, "targettarget", "player") == false then
-    ns.ShowMessage("busy", L.busy, L.busyInfo)
-    ns.SetMarker(nil)
-    snapshot.time = 0
-    return TICK_FAR
+  if mobFighting then
+    -- targettarget is often secret, threat isn't (2-3 = hitting you)
+    local threat, refused = ns.Ask("UnitThreatSituation", UnitThreatSituation, "player", "target")
+    if not refused and (threat == nil or threat < 2) then
+      ns.ShowMessage("busy", L.busy, L.busyInfo)
+      ns.SetMarker(nil)
+      snapshot.time = 0
+      return TICK_FAR
+    end
   end
 
   local radius, source, count = Estimate(mode)
